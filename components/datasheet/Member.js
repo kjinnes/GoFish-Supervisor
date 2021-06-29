@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Checkbox } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -9,63 +9,51 @@ const Member = ({
   member,
   i,
   end,
-  teamMembers,
-  setTeamMembers,
+  changeHandler,
+  addHandler,
+  subtractHandler,
 }) => {
-  const [oneMember, setOneMember] = React.useState(member);
-  const handleMemberChange = (e, i) => {
-    setOneMember({ ...oneMember, name: e.target.value });
-    const temp = teamMembers;
-    temp[i] = member;
-    setTeamMembers(temp);
+  const [oneMember, setOneMember] = useState(member);
+  const handleMemberChange = (e) => {
+    setOneMember({
+      ...oneMember,
+      name: e.target.value,
+    });
+    changeHandler(e, i);
   };
 
-  const addMember = () => {
-    setTeamMembers([...teamMembers, {
-      name: '',
-      teamLead: false,
-    }]);
-  };
-  console.log(oneMember);
+  const lastStyle = () => (end ? { marginBottom: 10 } : { marginBottom: 0 });
+
   return (
-    <div
-      className="checkRowStyle"
-      key={oneMember.name + oneMember.teamLead}
-    >
+
+    <div style={lastStyle()} className="checkRowGrid">
       <TextField
-        id={oneMember.name + oneMember.teamLead}
         style={{ marginTop: 10 }}
         variant="outlined"
         value={oneMember.name}
-        onChange={(e) => handleMemberChange(e, i)}
+        onChange={(e) => handleMemberChange(e)}
       />
-      <Checkbox
-        id={`${oneMember.name}${oneMember.teamLead}check`}
-        color="secondary"
-        checked={oneMember.teamLead}
-      />
-      <RemoveCircleOutlineIcon />
-      {end && (
-      <AddCircleOutlineIcon
-        onClick={addMember}
-      />
-      )}
+      <div className="checkRowStyle">
+        <Checkbox
+          color="secondary"
+          checked={oneMember.teamLead}
+        />
+      </div>
+      <div className="checkRowStyle">
+        <RemoveCircleOutlineIcon
+          onClick={() => subtractHandler(i)}
+        />
+      </div>
+      <div className="checkRowStyle">
+        {end ? (
+          <AddCircleOutlineIcon
+            onClick={addHandler}
+          />
+        ) : <div />}
+      </div>
     </div>
-  );
-};
 
-Member.propTypes = {
-  member: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    teamLead: PropTypes.bool.isRequired,
-  }).isRequired,
-  i: PropTypes.number.isRequired,
-  end: PropTypes.bool.isRequired,
-  teamMembers: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    teamLead: PropTypes.bool.isRequired,
-  })).isRequired,
-  setTeamMembers: PropTypes.func.isRequired,
+  );
 };
 
 export default Member;

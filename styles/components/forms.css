@@ -26,4 +26,13 @@
 .checkRowStyle {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
+
+.checkRowGrid {
+  margin-left: 15px;
+  display: grid;
+  grid-template-columns: 50% 20% 15% 15% ;
+}
+

@@ -5,7 +5,8 @@ import { Button, InputAdornment } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs';
-import Member from './Member';
+import uuid from 'react-uuid';
+import NewMembers from './NewMembers';
 import {
   WaterConditions, FlowType, Visibility, ViewingConditions,
 } from '../../constants/conditions';
@@ -31,30 +32,11 @@ const NewVisit = () => {
       teamLead: false,
     },
   ]);
-  console.log(teamMembers);
 
   const submitHandler = (e) => {
     e.preventDefault();
     const formVal = document.getElementById('formVisit');
     console.log(formVal.reportValidity());
-  };
-
-  const addMember = () => {
-    const newList = teamMembers.map((member) => {
-      const inputMember = document.getElementById(member.name + member.teamLead);
-      return inputMember.value;
-    });
-    console.log(newList);
-  };
-
-  const handleMemberChange = (e, i) => {
-    console.log(i);
-    const temp = teamMembers;
-    temp[i] = {
-      name: e.target.value,
-      teamLead: teamMembers[i].teamLead,
-    };
-    setTeamMembers(temp);
   };
 
   return (
@@ -139,15 +121,10 @@ const NewVisit = () => {
         <h3>Team members</h3>
         <div className="inputStyle">
           <div className="checkStyle">
-            {teamMembers.map((member, i) => (
-              <Member
-                member={member}
-                i={i}
-                end={i === teamMembers.length - 1}
-                teamMembers={teamMembers}
-                setTeamMembers={setTeamMembers}
-              />
-            ))}
+            <NewMembers
+              teamMembers={teamMembers}
+              setTeamMembers={setTeamMembers}
+            />
           </div>
         </div>
         <Button
