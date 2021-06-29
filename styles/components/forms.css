@@ -1,0 +1,29 @@
+.inputStyle {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.introStyle {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  margin-left: 10px;
+}
+
+.formGrid {
+  margin: 15px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 10px;
+}
+
+.checkStyle {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkRowStyle {
+  display: flex;
+  align-items: center;
+}

@@ -63,18 +63,18 @@ const Navbar = () => {
             </div>
             <div>
               <br />
-              <h3>Edit Surveys</h3>
+              <h3>Surveys</h3>
               <ul>
-                <Link href="/newQues">
-                  <a>
-                    <AssessmentIcon />
-                    <li>New survey</li>
-                  </a>
-                </Link>
                 <Link href="/">
                   <a>
+                    <AssessmentIcon />
+                    <li>New Season</li>
+                  </a>
+                </Link>
+                <Link href="/newdata">
+                  <a>
                     <WorkIcon />
-                    <li>Projects</li>
+                    <li>Add Data</li>
                   </a>
                 </Link>
               </ul>
