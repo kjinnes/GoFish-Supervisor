@@ -28,6 +28,19 @@ const NewMembers = ({
     setTeamMembers(temp);
   };
 
+  const checkHandler = (i, change) => {
+    const temp = teamMembers;
+    if (change === false) {
+      temp[i].teamLead = false;
+    } else {
+      temp.map((member) => ({
+        ...member,
+        teamLead: false,
+      }))
+    }
+    setTeamMembers(temp);
+  };
+  console.log(teamMembers);
   return (
     <>
       <div className="checkRowGrid">
@@ -45,6 +58,7 @@ const NewMembers = ({
           changeHandler={changeHandler}
           addHandler={addHandler}
           subtractHandler={subtractHandler}
+          checkHandler={checkHandler}
         />
       ))}
     </>

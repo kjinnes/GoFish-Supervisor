@@ -15,7 +15,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getUser());
     if (!user) {
+      console.log('here');
       dispatch(getUser());
     }
   }, []);

@@ -8,12 +8,39 @@ import {
   ERROR,
 } from './actionTypes';
 
-export const getUser = () => (dispatch) => {
+export const getUser = () => async (dispatch) => {
   firebaseClient();
-  const { currentUser } = firebase.auth();
+  const auth = await firebase.auth();
+  const { currentUser } = await auth;
+  if (currentUser) {
+    return dispatch({
+      type: GET_USER,
+      payload: {
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid,
+      },
+    });
+  }
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      return dispatch({
+        type: GET_USER,
+        payload: {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        },
+      });
+    }
+    return dispatch({
+      type: GET_USER,
+      payload: null,
+    });
+  });
   return dispatch({
     type: GET_USER,
-    payload: currentUser,
+    payload: null,
   });
 };
 

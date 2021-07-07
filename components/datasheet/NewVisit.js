@@ -5,7 +5,6 @@ import { Button, InputAdornment } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs';
-import uuid from 'react-uuid';
 import NewMembers from './NewMembers';
 import {
   WaterConditions, FlowType, Visibility, ViewingConditions,
@@ -62,7 +61,7 @@ const NewVisit = () => {
           />
           <TextField
             style={{ marginTop: 10 }}
-            rows={2}
+            rows={3}
             label="Comments"
             multiline
             variant="outlined"

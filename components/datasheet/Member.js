@@ -12,6 +12,7 @@ const Member = ({
   changeHandler,
   addHandler,
   subtractHandler,
+  checkHandler,
 }) => {
   const [oneMember, setOneMember] = useState(member);
   const handleMemberChange = (e) => {
@@ -24,6 +25,14 @@ const Member = ({
 
   const lastStyle = () => (end ? { marginBottom: 10 } : { marginBottom: 0 });
 
+  const handleTeamLeadChange = () => {
+    setOneMember({
+      ...oneMember,
+      teamLead: !oneMember.teamLead,
+    });
+    checkHandler(i, !oneMember.teamLead);
+  };
+  console.log(oneMember)
   return (
 
     <div style={lastStyle()} className="checkRowGrid">
@@ -37,6 +46,7 @@ const Member = ({
         <Checkbox
           color="secondary"
           checked={oneMember.teamLead}
+          onClick={handleTeamLeadChange}
         />
       </div>
       <div className="checkRowStyle">
