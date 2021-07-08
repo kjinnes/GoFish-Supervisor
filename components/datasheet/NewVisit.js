@@ -9,7 +9,7 @@ import NewMembers from './NewMembers';
 import {
   WaterConditions, FlowType, Visibility, ViewingConditions,
 } from '../../constants/conditions';
-import { creekList } from '../../constants/creeknames.json';
+import creekList from '../../constants/creeknames';
 
 const NewVisit = () => {
   const [visit, setVisit] = React.useState({
@@ -24,9 +24,11 @@ const NewVisit = () => {
   });
   const [teamMembers, setTeamMembers] = React.useState([
     {
+      id: 0,
       name: '',
       teamLead: true,
     }, {
+      id: 1,
       name: '',
       teamLead: false,
     },
