@@ -18,3 +18,11 @@ export const NEW_USER = 'NEW_USER';
 
 // Error
 export const ERROR = 'ERROR';
+
+// Add new data
+export const NEW_VISIT = 'NEW_VISIT';
+export const UPDATE_VISIT = 'UPDATE_VISIT';
+export const SAVE_VISIT = 'SAVE_VISIT';
+export const CREATE_PIN = 'CREATE_PIN';
+export const UPDATE_PIN = 'UPDATE_PIN';
+export const UPDATE_MEMBERS = 'UPDATE_MEMBERS';

@@ -1,10 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, InputAdornment } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import dayjs from 'dayjs';
+import { updateVisit, newVisit } from '../../redux/actions/visitActions';
 import NewMembers from './NewMembers';
 import {
   WaterConditions, FlowType, Visibility, ViewingConditions,
@@ -12,27 +13,12 @@ import {
 import creekList from '../../constants/creeknames';
 
 const NewVisit = () => {
-  const [visit, setVisit] = React.useState({
-    creekName: '',
-    date: dayjs(new Date()).format('YYYY-MM-DD'),
-    flowType: '',
-    visibility: '',
-    waterCondition: '',
-    viewCondition: '',
-    comments: '',
-    distance: '',
-  });
-  const [teamMembers, setTeamMembers] = React.useState([
-    {
-      id: 0,
-      name: '',
-      teamLead: true,
-    }, {
-      id: 1,
-      name: '',
-      teamLead: false,
-    },
-  ]);
+  const visit = useSelector((state) => state.visit);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(newVisit());
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -43,6 +29,7 @@ const NewVisit = () => {
   return (
     <div>
       <h2>Manual Entry of Field Data</h2>
+      {visit && (
       <form id="formVisit" onSubmit={submitHandler}>
         <h3>Details</h3>
         <div className="introStyle">
@@ -52,13 +39,13 @@ const NewVisit = () => {
             type="date"
             value={visit.date}
             variant="outlined"
-            onChange={(e) => setVisit({ ...visit, date: e.target.value })}
+            onChange={(e) => dispatch(updateVisit({ date: e.target.value }))}
           />
           <Autocomplete
             className="inputStyle"
             options={creekList}
             inputValue={visit.creekName}
-            onInputChange={(event, value) => setVisit({ ...visit, creekName: value })}
+            onInputChange={(event, value) => dispatch(updateVisit({ creekName: value }))}
             renderInput={(params) => <TextField {...params} label="Creek Name" variant="outlined" />}
           />
           <TextField
@@ -68,7 +55,7 @@ const NewVisit = () => {
             multiline
             variant="outlined"
             value={visit.comments}
-            onChange={(e) => setVisit({ ...visit, comments: e.target.value })}
+            onChange={(e) => dispatch(updateVisit({ comments: e.target.value }))}
           />
         </div>
         <h3>Conditions</h3>
@@ -78,7 +65,7 @@ const NewVisit = () => {
               className="inputStyle"
               options={FlowType}
               inputValue={visit.flowType}
-              onInputChange={(event, value) => setVisit({ ...visit, flowType: value })}
+              onInputChange={(event, value) => dispatch(updateVisit({ flowType: value }))}
               getOptionLabel={(option) => option.detail}
               renderInput={(params) => <TextField {...params} label="Flow Type" variant="outlined" />}
             />
@@ -86,7 +73,7 @@ const NewVisit = () => {
               className="inputStyle"
               options={Visibility}
               inputValue={visit.visibility}
-              onInputChange={(event, value) => setVisit({ ...visit, visibility: value })}
+              onInputChange={(event, value) => dispatch(updateVisit({ visibility: value }))}
               getOptionLabel={(option) => option.detail}
               renderInput={(params) => <TextField {...params} label="Visibility" variant="outlined" />}
             />
@@ -94,7 +81,7 @@ const NewVisit = () => {
               className="inputStyle"
               options={WaterConditions}
               inputValue={visit.waterCondition}
-              onInputChange={(event, value) => setVisit({ ...visit, waterCondition: value })}
+              onInputChange={(event, value) => dispatch(updateVisit({ waterCondition: value }))}
               getOptionLabel={(option) => option.detail}
               renderInput={(params) => <TextField {...params} label="Water Condition" variant="outlined" />}
             />
@@ -102,7 +89,7 @@ const NewVisit = () => {
               className="inputStyle"
               options={ViewingConditions}
               inputValue={visit.viewCondition}
-              onInputChange={(event, value) => setVisit({ ...visit, viewCondition: value })}
+              onInputChange={(event, value) => dispatch(updateVisit({ viewCondition: value }))}
               getOptionLabel={(option) => option.detail}
               renderInput={(params) => <TextField {...params} label="View Condition" variant="outlined" />}
             />
@@ -112,7 +99,7 @@ const NewVisit = () => {
               type="number"
               value={visit.distance}
               variant="outlined"
-              onChange={(e) => setVisit({ ...visit, distance: e.target.value })}
+              onChange={(e) => dispatch(updateVisit({ distance: e.target.value }))}
               InputProps={{
                 endAdornment: <InputAdornment position="end">Miles</InputAdornment>,
               }}
@@ -122,10 +109,7 @@ const NewVisit = () => {
         <h3>Team members</h3>
         <div className="inputStyle">
           <div className="checkStyle">
-            <NewMembers
-              teamMembers={teamMembers}
-              setTeamMembers={setTeamMembers}
-            />
+            <NewMembers />
           </div>
         </div>
         <Button
@@ -136,6 +120,7 @@ const NewVisit = () => {
           Submit
         </Button>
       </form>
+      )}
     </div>
   );
 };

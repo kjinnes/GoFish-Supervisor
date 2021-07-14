@@ -1,12 +1,11 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import uuid from 'react-uuid';
 import Member from './Member';
 
-const NewMembers = ({
-  teamMembers,
-  setTeamMembers,
-}) => {
+const NewMembers = () => {
+  const teamMembers = useSelector((state) => state.teamMembers);
   const changeHandler = (e, i) => {
     const temp = teamMembers;
     temp[i].name = e.target.value;

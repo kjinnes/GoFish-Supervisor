@@ -13,13 +13,10 @@ import { getUser } from '../../redux/actions/userActions';
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  console.log(user);
   useEffect(() => {
     dispatch(getUser());
-    if (!user) {
-      console.log('here');
-      dispatch(getUser());
-    }
+    if (!user) dispatch(getUser());
   }, []);
 
   return (
