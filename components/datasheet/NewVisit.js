@@ -1,11 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, InputAdornment } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { updateVisit, newVisit } from '../../redux/actions/visitActions';
 import NewMembers from './NewMembers';
 import {
   WaterConditions,
@@ -28,16 +27,12 @@ const NewVisit = () => {
 
   useEffect(() => {
     console.log('visit', visit);
-    // dispatch(newVisit());
   }, [visit]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('submitting', visit);
     setVisit({});
-    // formik?
-    // const formVal = document.getElementById('formVisit');
-    // console.log(formVal.reportValidity());
   };
 
   return (
@@ -48,6 +43,7 @@ const NewVisit = () => {
           <h3>Details</h3>
           <div className="introStyle">
             <TextField
+              InputLabelProps={{ shrink: true }}
               className="inputStyle"
               label="Date of visit"
               type="date"
