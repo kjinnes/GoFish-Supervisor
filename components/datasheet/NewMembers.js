@@ -1,15 +1,20 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'react-uuid';
 import Member from './Member';
 
-const NewMembers = () => {
-  const teamMembers = useSelector((state) => state.teamMembers);
+const NewMembers = (props) => {
+  const { handleMembers, members } = props;
+  const [teamMembers, setTeamMembers] = useState(members);
+  console.log('memberss', handleMembers, members);
+  useEffect(() => handleMembers(teamMembers), [teamMembers]);
+
   const changeHandler = (e, i) => {
-    const temp = teamMembers;
-    temp[i].name = e.target.value;
-    setTeamMembers(temp);
+    //    setTeamMembers(
+    // teamMembers.map((member, idx) => (idx === i ? { ...member, name: e.target.value } : member)),
+    //    );
+    // mutate to prevent updating state
+    teamMembers[i].name = e.target.value;
   };
 
   const addHandler = () => {
@@ -23,24 +28,16 @@ const NewMembers = () => {
   };
 
   const subtractHandler = (i) => {
-    const temp = teamMembers.filter((member, index) => index !== i);
-    setTeamMembers(temp);
+    setTeamMembers(teamMembers.filter((member, index) => index !== i));
   };
 
-  const checkHandler = (i, change) => {
-    const temp = teamMembers;
-    if (change === false) {
-      temp[i].teamLead = false;
-    } else {
-      temp.map((member) => ({
-        ...member,
-        teamLead: false,
-      }))
-    }
-    setTeamMembers(temp);
+  const checkHandler = (i) => {
+    setTeamMembers(
+      teamMembers.map((member, idx) => (idx === i ? { ...member, teamLead: true } : { ...member, teamLead: false })),
+    );
   };
-  console.log(teamMembers);
-  return (
+
+  return teamMembers ? (
     <>
       <div className="checkRowGrid">
         <h5>Member Name</h5>
@@ -61,14 +58,20 @@ const NewMembers = () => {
         />
       ))}
     </>
+  ) : (
+    <div />
   );
 };
+
 NewMembers.propTypes = {
-  teamMembers: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    teamLead: PropTypes.bool.isRequired,
-  })).isRequired,
+  teamMembers: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      teamLead: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
   setTeamMembers: PropTypes.func.isRequired,
+  handleMembers: PropTypes.func.isRequired,
 };
 
 export default NewMembers;
